@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
+CORS(app)
 
 DATABASE_URL = "postgresql://admin:password@db:5432/tire_db"
 
