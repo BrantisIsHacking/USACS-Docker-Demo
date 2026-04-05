@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Rubber Room - Tire Inventory</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>The Rubber Room</h1>
+    <div id="statusBadge" class="badge status-ok">Connection Status: Online</div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Current Inventory</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Brand</th>
+              <th>Model</th>
+              <th>Size</th>
+              <th>Quantity</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tireTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Add New Tire</h2>
+      <form id="addTireForm">
+        <div class="form-grid">
+          <label>
+            Brand
+            <input type="text" name="brand" required>
+          </label>
+          <label>
+            Model
+            <input type="text" name="model" required>
+          </label>
+          <label>
+            Size
+            <input type="text" name="size" required placeholder="e.g. 245/40R18">
+          </label>
+          <label>
+            Quantity
+            <input type="number" name="quantity" required min="0" step="1">
+          </label>
+        </div>
+        <button type="submit" class="btn">Add Tire</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
