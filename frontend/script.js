@@ -25,8 +25,33 @@ function buildRow(tire) {
     <td>${tire.quantity}</td>
     <td>
       <div class="actions">
-        <button class="btn btn-secondary" data-action="sell" data-id="${tire.id}">Sell (-1)</button>
-        <button class="btn" data-action="restock" data-id="${tire.id}">Restock (+1)</button>
+        <div class="action-group">
+          <label class="amount-control" for="sell-amount-${tire.id}">Sell Amount</label>
+          <input
+            id="sell-amount-${tire.id}"
+            type="number"
+            data-sell-amount
+            min="1"
+            max="${tire.quantity}"
+            step="1"
+            value="1"
+            aria-label="Sell amount for ${tire.brand} ${tire.model}"
+          >
+          <button class="btn btn-secondary" data-action="sell" data-id="${tire.id}">Sell</button>
+        </div>
+        <div class="action-group">
+          <label class="amount-control" for="restock-amount-${tire.id}">Restock Amount</label>
+          <input
+            id="restock-amount-${tire.id}"
+            type="number"
+            data-restock-amount
+            min="1"
+            step="1"
+            value="1"
+            aria-label="Restock amount for ${tire.brand} ${tire.model}"
+          >
+          <button class="btn" data-action="restock" data-id="${tire.id}">Restock</button>
+        </div>
       </div>
     </td>
   `;
@@ -107,9 +132,22 @@ tableBody.addEventListener("click", (event) => {
     return;
   }
 
+  const actions = button.closest(".actions");
+  const amountSelector =
+    button.dataset.action === "sell" ? "input[data-sell-amount]" : "input[data-restock-amount]";
+  const amountInput = actions ? actions.querySelector(amountSelector) : null;
+  const amount = Number(amountInput ? amountInput.value : 1);
+
+  if (!Number.isInteger(amount) || amount < 1) {
+    if (amountInput) {
+      amountInput.value = "1";
+    }
+    return;
+  }
+
   const id = Number(button.dataset.id);
   const action = button.dataset.action;
-  const delta = action === "sell" ? -1 : 1;
+  const delta = action === "sell" ? -amount : amount;
   updateQuantity(id, delta);
 });
 

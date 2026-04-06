@@ -54,6 +54,11 @@ def update_quantity():
             )
             updated = cur.fetchone()
 
+            if updated and updated["quantity"] == 0:
+                cur.execute("DELETE FROM tires WHERE id = %s", (tire_id,))
+                conn.commit()
+                return jsonify({"id": tire_id, "deleted": True}), 200
+
         if updated is None:
             conn.rollback()
             return jsonify({"error": "Tire not found"}), 404
@@ -75,6 +80,9 @@ def add_tire():
 
     if not brand or not model or not size or quantity is None:
         return jsonify({"error": "'brand', 'model', 'size', and 'quantity' are required"}), 400
+
+    if not isinstance(quantity, int) or quantity <= 0:
+        return jsonify({"error": "'quantity' must be a positive integer"}), 400
 
     conn = get_connection()
     try:
