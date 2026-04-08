@@ -1,10 +1,10 @@
 services:
   frontend:
-    image: nginx:alpine
-    ports:
-      - "3000:80"
+    image: nginx
     volumes:
       - ./frontend:/usr/share/nginx/html
+    ports:
+      - "8080:80"
 
   backend:
     build: ./backend
@@ -14,7 +14,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql://admin:password@db:5432/tire_db
-
+  
   db:
     image: postgres:alpine
     environment:
