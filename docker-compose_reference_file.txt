@@ -16,14 +16,14 @@ services:
       DATABASE_URL: postgresql://admin:password@db:5432/tire_db
 
   db:
-    image: postgres:15-alpine
+    image: postgres:alpine
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
       POSTGRES_DB: tire_db
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
 volumes:
   postgres_data:

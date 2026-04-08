@@ -4,8 +4,8 @@ A simple tire inventory app built with a static frontend, a Flask API, and Postg
 
 ## Stack
 - Frontend: HTML, CSS, JavaScript, served by Nginx
-- Backend: Python 3.12, Flask, Flask-CORS, psycopg2-binary
-- Database: PostgreSQL 15
+- Backend: Python, Flask, Flask-CORS, psycopg2-binary
+- Database: PostgreSQL
 
 ## Run
 ```bash
