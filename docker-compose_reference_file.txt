@@ -1,13 +1,10 @@
 services:
-  db:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: tire_db
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "3000:80"
     volumes:
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - postgres_data:/var/lib/postgresql/data
+      - ./frontend:/usr/share/nginx/html
 
   backend:
     build: ./backend
@@ -18,12 +15,15 @@ services:
     environment:
       DATABASE_URL: postgresql://admin:password@db:5432/tire_db
 
-  frontend:
-    image: nginx:alpine
-    ports:
-      - "3000:80"
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tire_db
     volumes:
-      - ./frontend:/usr/share/nginx/html
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
